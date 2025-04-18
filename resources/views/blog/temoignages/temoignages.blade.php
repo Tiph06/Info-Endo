@@ -5,47 +5,46 @@
 @section('content')
 <h2 class="text-2xl font-bold mb-6 text-pink-700">Témoignages 💬</h2>
 
-<p class="mb-4 text-gray-700">Des personnes partagent ici leur vécu face à l’endométriose, pour briser le silence et aider d’autres à mieux comprendre.</p>
+<p class="mb-4 text-gray-700">Des personnes partagent ici leur vécu face à l’endométriose.</p>
 
-<div class="space-y-6">
+<!-- Filtres -->
+<div class="mb-6 flex flex-wrap gap-2">
+    <button onclick="filterCategory('all')" class="filter-btn bg-gray-200 text-gray-800 px-3 py-1 rounded">🗂️ Tous</button>
+    <button onclick="filterCategory('Diagnostique')" class="filter-btn bg-pink-100 text-pink-700 px-3 py-1 rounded">🩺 Diagnostique</button>
+    <button onclick="filterCategory('Symptômes')" class="filter-btn bg-pink-100 text-pink-700 px-3 py-1 rounded">🔥 Symptômes</button>
+</div>
 
-    {{-- Témoignage 1 - Court (pas de "Lire la suite") --}}
-    <div class="bg-white p-4 rounded shadow">
+<div id="temoignages-list" class="space-y-6">
+    @foreach ($posts as $post)
+    <div class="bg-white p-4 rounded shadow" data-category="{{ $post->categorie }}">
+        <span class="text-sm font-semibold text-pink-600 uppercase block mb-1">
+            {{ $post->categorie === 'Diagnostique' ? '🩺 Diagnostique' : '🔥 Symptômes' }}
+        </span>
         <p class="text-gray-800">
-            “J’ai été diagnostiquée il y a deux ans. Depuis, je me sens enfin entendue et comprise. Ce blog m’aide à ne pas me sentir seule.”
-        </p>
-    </div>
-
-    {{-- Témoignage 2 - Moyen (avec "Lire la suite") --}}
-    <div class="bg-white p-4 rounded shadow">
-        <p class="text-gray-800">
-            “Depuis l’adolescence, j’ai toujours eu des douleurs très fortes pendant mes règles...”
+            {{ Str::limit($post->contenu, 150) }}
             <span class="text-pink-600 font-medium cursor-pointer hover:underline"
-                onclick="openModal(`Depuis l’adolescence, j’ai toujours eu des douleurs très fortes pendant mes règles. Personne ne m’a crue pendant des années. Ce n’est qu’à 28 ans, après avoir changé trois fois de gynéco, qu’un IRM a enfin révélé de l’endométriose. Ce jour-là, j’ai pleuré... de soulagement.`)">
+                onclick="openModal(`{{ e($post->contenu) }}`)">
                 Lire la suite
             </span>
         </p>
+        <form action="{{ route('temoignages.destroy', $post->id) }}" method="POST" onsubmit="return confirm('Supprimer ce témoignage ?');" class="inline-block ml-2">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="text-red-500 hover:text-red-700">Supprimer</button>
+        </form>
     </div>
+    @endforeach
+</div>
 
-    {{-- Témoignage 3 - Long (avec "Lire la suite") --}}
-    <div class="bg-white p-4 rounded shadow">
-        <p class="text-gray-800">
-            “J’ai mis plus de 10 ans à obtenir un diagnostic. Chaque mois, c’était l’enfer...”
-            <span class="text-pink-600 font-medium cursor-pointer hover:underline"
-                onclick="openModal(`J’ai mis plus de 10 ans à obtenir un diagnostic. Chaque mois, c’était l’enfer : douleurs insoutenables, fatigue chronique, crises d’angoisse. À l’école, on disait que j’exagérais, que j’étais fragile. Ensuite, au travail, j’étais jugée non fiable à cause de mes arrêts maladie. Il a fallu que je tombe sur un médecin spécialisé pour qu’enfin, on pose un mot sur ce que je vivais depuis si longtemps. Aujourd’hui encore, je me bats pour être entendue, pour adapter mon quotidien, mais j’ai décidé de témoigner pour que d’autres femmes ne perdent pas autant de temps que moi.`)">
-                Lire la suite
-            </span>
-        </p>
-    </div>
 
-    {{-- Bientôt : bouton pour écrire son propre témoignage --}}
-    <div class="mt-8">*
-        <a href="{{ route('temoignages.create') }}">
-            <button class="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 shadow">
-                ✍️ Partager mon témoignage (à venir)
-            </button>
-        </a>
-    </div>
+{{-- Bientôt : bouton pour écrire son propre témoignage --}}
+<div class="mt-8">*
+    <a href="{{ route('temoignages.create') }}">
+        <button class="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 shadow">
+            ✍️ Partager mon témoignage
+        </button>
+    </a>
+</div>
 </div>
 <!-- Modale invisible -->
 <div id="modal" class="fixed inset-0 bg-rose-300 bg-opacity-20 flex items-center justify-center z-50 hidden">
@@ -61,23 +60,29 @@
 
 @section('scripts')
 <script>
-    const modal = document.getElementById('modal');
-    const modalContent = document.getElementById('modalContent');
-    const closeModal = document.getElementById('closeModal');
-
     function openModal(content) {
-        modalContent.innerHTML = content.replace(/\n/g, '<br>');
-        modal.classList.remove('hidden');
+        document.getElementById('modalContent').innerHTML = content.replace(/\n/g, '<br>');
+        document.getElementById('modal').classList.remove('hidden');
     }
 
-    closeModal.addEventListener('click', () => {
-        modal.classList.add('hidden');
+    document.getElementById('closeModal').addEventListener('click', () => {
+        document.getElementById('modal').classList.add('hidden');
     });
 
     window.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.classList.add('hidden');
+        if (e.target === document.getElementById('modal')) {
+            document.getElementById('modal').classList.add('hidden');
         }
     });
+
+    function filterCategory(category) {
+        const items = document.querySelectorAll('#temoignages-list > div');
+        items.forEach(item => {
+            const itemCategory = item.dataset.category.toLowerCase();
+            const selected = category.toLowerCase();
+            const show = selected === 'all' || itemCategory === selected;
+            item.style.display = show ? 'block' : 'none';
+        });
+    }
 </script>
 @endsection

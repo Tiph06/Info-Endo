@@ -9,7 +9,8 @@ class PostController extends Controller
 
     public function index()
     {
-        return view('blog.temoignages.temoignages');
+        $posts = \App\Models\Post::latest()->get();
+        return view('blog.temoignages.temoignages', compact('posts'));
     }
 
     public function create()
@@ -24,7 +25,7 @@ class PostController extends Controller
             'contenu' => 'required|string',
         ]);
 
-        \App\Models\Post::create([
+        \App\Models\Temoignage::create([
             'categorie' => $validated['categorie'],
             'contenu' => $validated['contenu'],
             'auteur' => 'Anonyme' // pour l’instant, car pas encore d’auth
