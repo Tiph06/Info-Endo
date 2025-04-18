@@ -39,31 +39,45 @@
     </div>
 
     {{-- Bientôt : bouton pour écrire son propre témoignage --}}
-    <div class="mt-8">
-        <button class="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 shadow">
-            ✍️ Partager mon témoignage (à venir)
-        </button>
+    <div class="mt-8">*
+        <a href="{{ route('temoignages.create') }}">
+            <button class="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 shadow">
+                ✍️ Partager mon témoignage (à venir)
+            </button>
+        </a>
     </div>
 </div>
 <!-- Modale invisible -->
-<div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 ">
-    <div class="bg-white max-w-md w-full p-6 rounded shadow-lg relative">
-        <button onclick="closeModal()" class="absolute top-2 right-3 text-gray-500 hover:text-gray-800 text-xl">&times;</button>
-        <!-- <h3 class="text-lg font-bold text-pink-600 mb-2">Témoignage complet</h3> -->
-        <p id="modal-content" class="text-gray-700 leading-relaxed"></p>
+<div id="modal" class="fixed inset-0 bg-rose-300 bg-opacity-20 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-lg p-6 w-full max-w-xl relative">
+        <button id="closeModal" class="absolute top-2 right-2 text-gray-500 hover:text-red-600">
+            &times;
+        </button>
+        <h2 class="text-xl font-bold text-rose-900 mb-4">Témoignage</h2>
+        <p id="modalContent" class="text-slate-800"></p>
     </div>
 </div>
 @endsection
 
 @section('scripts')
 <script>
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modalContent');
+    const closeModal = document.getElementById('closeModal');
+
     function openModal(content) {
-        document.getElementById('modal-content').textContent = content;
-        document.getElementById('modal').classList.remove('hidden');
+        modalContent.innerHTML = content.replace(/\n/g, '<br>');
+        modal.classList.remove('hidden');
     }
 
-    function closeModal() {
-        document.getElementById('modal').classList.add('hidden');
-    }
+    closeModal.addEventListener('click', () => {
+        modal.classList.add('hidden');
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.add('hidden');
+        }
+    });
 </script>
 @endsection

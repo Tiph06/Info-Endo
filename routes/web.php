@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use App\Models\Post;
@@ -11,9 +12,12 @@ Route::get('/', function () {
 });
 
 // Nouvelle page statique pour les témoignages
-Route::get('/temoignages', function () {
-    return view('blog.temoignages');
-})->name('blog.temoignages');
+Route::get('/temoignages', [PostController::class, 'index'])->name('temoignages.index');
+
+
+// Page pour creer un témoignage
+Route::get('/temoignages/create', [PostController::class, 'create'])->name('temoignages.create');
+
 
 // Page Article avec extrait Wikipédia
 Route::get('/article', function () {

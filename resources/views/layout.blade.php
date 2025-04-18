@@ -16,7 +16,7 @@
             <nav>
                 <a href="{{ route('blog.index') }}" class="text-pink-800 font-medium hover:underline">Accueil</a>
                 <a href="{{ route('article') }}" class="text-pink-800 font-medium hover:underline ml-4">Article</a>
-                <a href="{{ route('blog.temoignages') }}" class="text-pink-800 font-medium hover:underline ml-4">Témoignages</a>
+                <a href="{{ route('temoignages.index') }}" class="text-pink-800 font-medium hover:underline ml-4">Témoignages</a>
             </nav>
         </div>
     </header>
