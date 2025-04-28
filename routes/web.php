@@ -49,11 +49,13 @@ Route::get('/article', function () {
         ];
     }
 
-    return view('blog.article', compact('wiki'));
+    return view('blog.article.article', compact('wiki'));
 })->name('article');
+
+
 // Page pour créer un article
 Route::get('/create', function () {
-    return view('blog.create');
+    return view('blog.article.create');
 })->name('create');
 
 // Traitement du formulaire
@@ -76,7 +78,7 @@ Route::post('/store', function (Request $request) {
 // Page pour éditer un article
 Route::get('/{id}/edit', function ($id) {
     $post = \App\Models\Post::findOrFail($id);
-    return view('blog.edit', compact('post'));
+    return view('blog.article.edit', compact('post'));
 })->name('edit');
 
 Route::put('/{id}', function (Request $request, $id) {
@@ -119,7 +121,7 @@ Route::get('/{slug}--{id}', function ($slug, $id) {
     if ($response->successful()) {
         $image = $response['urls']['regular'];
     }
-    return view('blog.show', compact('post', 'image', 'stat'));
+    return view('blog.artcile.show', compact('post', 'image', 'stat'));
 })
     ->where(['slug' => '[a-z0-9\-]+', 'id' => '[0-9]+'])
     ->name('show');

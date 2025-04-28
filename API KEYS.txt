@@ -1,0 +1,12 @@
+
+Unsplash API
+
+Tiph06
+
+ID de l'application
+736263
+Clé d'accès
+iL7_Qeltzr1k1MO9GRQT4otjgfeRQc2a-wxgcrpb9aA
+Clé secrète
+V2urYKqOGqkhFkwbQMV1cbCmbbXXgRdw4WEXMj2dz3U
+Remarque : vos informations Access Keyet Secret Keydoivent rester confidentielles.
