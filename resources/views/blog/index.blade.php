@@ -76,10 +76,23 @@
 
         <!-- 🌍 Carte interactive -->
         <section>
+            <div class="mb-4">
+                <label for="regionSelect" class="block mb-2 text-gray-700">Filtrer par région :</label>
+                <select id="regionSelect" class="p-2 border rounded">
+                    <option value="">Toutes les régions</option>
+                    <option value="Île-de-France">Île-de-France</option>
+                    <option value="Auvergne-Rhône-Alpes">Auvergne-Rhône-Alpes</option>
+                    <option value="Provence-Alpes-Côte d’Azur">Provence-Alpes-Côte d’Azur</option>
+                    <option value="Occitanie">Occitanie</option>
+                    <option value="Pays de la Loire">Pays de la Loire</option>
+                    <option value="Hauts-de-France">Hauts-de-France</option>
+                </select>
+            </div>
+
             <h2 class="text-2xl font-semibold mb-4">Carte interactive sur l'endométriose 🗺️</h2>
             <div class="bg-white rounded-lg shadow-md p-6">
                 <p class="text-gray-600 mb-4 text-center">La carte sera affichée ici bientôt !</p>
-                <div id="map" class="w-full h-96 bg-gray-200 rounded-lg flex items-center justify-center">
+                <div id="map" class="w-full h-140 bg-gray-200 rounded-lg flex items-center justify-center">
                     <span class="text-gray-500">[ Carte en construction ]</span>
                 </div>
             </div>
@@ -203,6 +216,108 @@
             interactiveChart.update();
         });
     });
+
+    // La carte interactive
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var map = L.map('map').setView([46.6034, 1.8883], 6); // Centrage sur la France
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Centres et spécialistes en France
+        var centers = [{
+                name: "Hôpital Paris Saint-Joseph",
+                address: "185 Rue Raymond Losserand, 75014 Paris",
+                coords: [48.82963720202146, 2.311622302824082],
+                region: "Île-de-France"
+            },
+            {
+                name: "Institut de la femme et de l’Endométriose",
+                address: "5 allée Arnaud Beltrame,75003 Paris",
+                coords: [48.85723699195826, 2.3668469279770226],
+                region: "Île-de-France"
+            },
+            {
+                name: "CHU de Nice – Hôpital de l'Archet",
+                address: "151 Route de Saint-Antoine, 06200 Nice",
+                coords: [43.69659696127434, 7.226779437733042],
+                region: "Provence-Alpes-Côte d’Azur"
+            },
+            {
+                name: "Centre Lyonnais de l'Endométriose",
+                address: "Hôpital Femme Mère Enfant, 59 Boulevard Pinel, 69003 Lyon",
+                coords: [45.7456032249776, 4.901172395535287],
+                region: "Auvergne-Rhône-Alpes"
+            },
+            {
+                name: "Centre Endométriose Marseille",
+                address: "Hôpital de la Timone, 264 Rue Saint-Pierre, 13005 Marseille",
+                coords: [43.270337390805885, 5.385967940513273],
+                region: "Provence-Alpes-Côte d’Azur"
+            },
+            {
+                name: "Centre Hospitalier Universitaire de Toulouse",
+                address: "2 Rue Viguerie, 31059 Toulouse",
+                coords: [43.59955201901712, 1.4362110619577042],
+                region: "Occitanie"
+            },
+            {
+                name: "Centre Endométriose Nantes",
+                address: "Hôpital de la Cavale Blanche, 2 Rue de la Cavale Blanche, 44000 Nantes",
+                coords: [47.20061623481171, -1.5268485391554418],
+                region: "Pays de la Loire"
+            },
+            {
+                name: "Centre Hospitalier de Lille",
+                address: "2 Rue du Professeur Langevin, 59000 Lille",
+                coords: [50.61106477989332, 3.0345872875000923],
+                region: "Hauts-de-France"
+            }
+        ];
+
+        // Ajoute les icons sur la carte
+        var pinkIcon = new L.Icon({
+            iconUrl: 'https://img.icons8.com/?size=100&id=ENrlMUJ4BgyP&format=png&color=000000',
+            iconSize: [35, 35], // Plus grand
+            iconAnchor: [15, 30], // Bien centré
+            popupAnchor: [0, -30] // Le popup se positionne proprement
+        });
+
+        centers.forEach(function(center) {
+            L.marker(center.coords, {
+                    icon: pinkIcon
+                })
+                .addTo(map)
+                .bindPopup('<b>' + center.name + '</b>');
+        });
+    });
+    var markers = [];
+
+    function updateMap(region = '') {
+        markers.forEach(marker => map.removeLayer(marker));
+        markers = [];
+
+        centers.forEach(function(center) {
+            if (region === '' || center.region === region) {
+                var marker = L.marker(center.coords, {
+                        icon: pinkIcon
+                    })
+                    .addTo(map)
+                    .bindPopup('<b>' + center.name + '</b>');
+                markers.push(marker);
+            }
+        });
+    }
+
+    document.getElementById('regionSelect').addEventListener('change', function() {
+        var selectedRegion = this.value;
+        updateMap(selectedRegion);
+    });
+
+    // Appel initial pour tout afficher
+    updateMap();
 </script>
 
 @endsection
