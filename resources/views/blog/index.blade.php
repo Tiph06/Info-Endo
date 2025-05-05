@@ -3,6 +3,21 @@
 @section('title', 'Accueil – Info-Endo')
 
 @section('content')
+
+@if(session('welcome'))
+<div id="popup-welcome" class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-pink-100 border border-pink-300 text-pink-800 px-4 py-2 rounded shadow-lg z-50 transition-opacity duration-500">
+    {{ session('welcome') }}
+</div>
+
+<script>
+    setTimeout(() => {
+        const popup = document.getElementById('popup-welcome');
+        if (popup) popup.style.opacity = '0';
+    }, 4000);
+</script>
+@endif
+
+
 <div class="container mx-auto px-4 py-8">
 
     <h1 class="text-3xl font-bold mb-6 text-center">Bienvenue sur Info-Endo 💛</h1>
