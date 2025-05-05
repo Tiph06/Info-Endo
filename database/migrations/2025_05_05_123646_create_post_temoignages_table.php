@@ -6,24 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up()
     {
-        Schema::create('temoignages', function (Blueprint $table) {
+        Schema::create('post_temoignages', function (Blueprint $table) {
             $table->id();
             $table->string('categorie');
             $table->text('contenu');
-            $table->string('auteur')->default('Anonyme');
             $table->timestamps();
         });
     }
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+
+    public function down()
     {
-        Schema::dropIfExists('temoignages');
+        Schema::dropIfExists('post_temoignages');
     }
 };

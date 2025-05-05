@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Temoignage;
+use App\Models\PostTemoignage;
 
-class TemoignageController extends Controller
+class PostTemoignageController extends Controller
+
 {
     public function destroy($id)
     {
-        $temoignage = Temoignage::findOrFail($id);
+        $temoignage = PostTemoignage::findOrFail($id);
         $temoignage->delete();
 
         return redirect()->route('temoignages.index')->with('success', 'Témoignage supprimé 🗑️');
