@@ -18,6 +18,21 @@
                 <a href="{{ route('blog.index') }}" class="text-pink-800 font-medium hover:underline">Accueil</a>
                 <a href="{{ route('article') }}" class="text-pink-800 font-medium hover:underline ml-4">Article</a>
                 <a href="{{ route('temoignages.index') }}" class="text-pink-800 font-medium hover:underline ml-4">Témoignages</a>
+
+                @auth
+                <a href="{{ route('logout') }}"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                    class="ml-4 text-sm text-pink-700 font-medium hover:underline">Se déconnecter</a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                    @csrf
+                </form>
+                @else
+                <a href="{{ route('login') }}" class="ml-4 text-sm text-pink-700 font-medium hover:underline">Connexion</a>
+                <a href="{{ route('register') }}" class="ml-4 text-sm text-pink-700 font-medium hover:underline">Inscription</a>
+                @endauth
+
+
             </nav>
         </div>
     </header>
