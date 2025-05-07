@@ -12,6 +12,7 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostTemoignageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\TemoignageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -227,6 +228,12 @@ Route::prefix('blog')->name('blog.')->group(function () {
 
         return view('blog.index', compact('posts', 'stat'));
     })->name('index'); // <= C’EST CETTE LIGNE QUI NOMME LA ROUTE blog.index
+
+    Route::get('/search', [SearchController::class, 'search'])->name('search');
+
+    //
+    // 📄 ARTICLE
+    //
 
     // Page pour créer un article
     Route::get('/create', function () {
