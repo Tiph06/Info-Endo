@@ -24,6 +24,14 @@
             <label for="contenu" class="block text-sm font-medium text-gray-700">Votre témoignage</label>
             <textarea name="contenu" id="contenu" rows="6" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500"></textarea>
         </div>
+        <!-- Consentement -->
+
+        <div class="mt-4">
+            <label class="inline-flex items-center">
+                <input type="checkbox" name="anonyme" class="form-checkbox text-pink-600" checked>
+                <span class="ml-2 text-gray-700">Je souhaite rester anonyme</span>
+            </label>
+        </div>
 
         <!-- Bouton -->
         <div class="text-right">

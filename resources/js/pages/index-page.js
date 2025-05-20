@@ -1,3 +1,6 @@
+import Chart from 'chart.js/auto';
+
+
 document.addEventListener('DOMContentLoaded', function () {
     // Graphiques statiques
     new Chart(document.getElementById('chart1'), {
@@ -152,6 +155,30 @@ document.addEventListener('DOMContentLoaded', function () {
             .bindPopup('<b>' + center.name + '</b>');
     });
 
+    function updateMap(region = '') {
+        markers.forEach(marker => map.removeLayer(marker));
+        markers = [];
+
+        centers.forEach(function(center) {
+            if (region === '' || center.region === region) {
+                var marker = L.marker(center.coords, {
+                        icon: pinkIcon
+                    })
+                    .addTo(map)
+                    .bindPopup('<b>' + center.name + '</b>');
+                markers.push(marker);
+            }
+        });
+    }
+
+    document.getElementById('regionSelect').addEventListener('change', function() {
+        var selectedRegion = this.value;
+        updateMap(selectedRegion);
+    });
+
+    // Appel initial pour tout afficher
+    updateMap();
+    
     window.myMarkers = [];
 
     window.updateMap = function (region = '') {

@@ -20,6 +20,8 @@
         <span class="text-sm font-semibold text-pink-600 uppercase block mb-1">
             {{ $post->categorie === 'Diagnostique' ? '🩺 Diagnostique' : '🔥 Symptômes' }}
         </span>
+        <p class="text-sm text-gray-500 italic mb-1">Posté par : {{ $post->auteur }}</p>
+
         <p class="text-gray-800">
             {{ Str::limit($post->contenu, 150) }}
             <span class="text-pink-600 font-medium cursor-pointer hover:underline"

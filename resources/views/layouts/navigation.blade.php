@@ -1,5 +1,10 @@
-<header class="bg-pink-200 py-4 shadow-md" x-data="{ open: false }">
-    <div class="max-w-4xl mx-auto px-4 flex items-center justify-between">
+<header
+    x-data="{ open: false, scrolled: false }"
+    x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY > 10 })"
+    :class="scrolled ? 'bg-pink-300 shadow-lg' : 'bg-pink-200 shadow-md'"
+    class="fixed top-0 w-full z-50 transition-all duration-300 ease-in-out py-4">
+
+    <div class="w-full max-w-7xl mx-auto px-4 flex items-center justify-between">
         <div class="flex items-center space-x-2">
             <img src="{{ asset('images/LogoRubanBig.png') }}" alt="Logo Info-Endo" class="h-10">
             <h1 class="text-2xl font-bold text-pink-900">Info-Endo</h1>

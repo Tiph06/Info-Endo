@@ -13,12 +13,10 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostTemoignageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
-use App\Http\Controllers\TemoignageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use App\Models\Post;
 use App\Models\PostTemoignage;
-use App\Models\Temoignage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -103,12 +101,19 @@ Route::get('/temoignages', function () {
 
 
 // Page pour creer un témoignage
-Route::get('/temoignages/create', [PostController::class, 'create'])->name('temoignages.create');
+Route::get('/temoignages/create', function () {
+    if (!auth()->check()) {
+        return redirect()->route('login')->with('error', 'Veuillez vous connecter pour publier un témoignage.');
+    }
+
+    return app(App\Http\Controllers\PostTemoignageController::class)->create();
+})->name('temoignages.create');
 
 Route::delete('/temoignages/{id}', [PostTemoignageController::class, 'destroy'])->name('temoignages.destroy');
 
 // Page Enregistrement du témoignage (formulaire POST)
-Route::post('/temoignages', [PostController::class, 'store'])->name('temoignages.store');
+Route::post('/temoignages', [PostTemoignageController::class, 'store'])->middleware('auth')
+    ->name('temoignages.store');
 
 //
 // 📄 ARTICLE (avec extrait Wikipédia)
