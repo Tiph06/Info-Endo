@@ -25,7 +25,7 @@ Route::get('/', function () {
 });
 
 
-//Authentification 
+// 🔐 Authentification 
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -55,6 +55,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    //Permets de rediriger vers la page de confirmation du mot de passe lors des changements importants
+    Route::get('/parametres-secrets', function () {
+        return view('secret');
+    })->middleware('password.confirm')->name('parametres.secrets');
 });
 
 
@@ -208,6 +213,14 @@ Route::get('/{slug}--{id}', function ($slug, $id) {
 })
     ->where(['slug' => '[a-z0-9\-]+', 'id' => '[0-9]+'])
     ->name('show');
+
+
+// 🧾 Pages légales
+Route::view('/cgu', 'legal.cgu')->name('cgu');
+Route::view('/confidentialite', 'legal.confidentialite')->name('confidentialite');
+Route::view('/mentions-legales', 'legal.mentions')->name('mentions');
+
+
 
 
 //

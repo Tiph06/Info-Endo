@@ -19,7 +19,7 @@
 @endif
 
 
-<div class="container mx-auto px-4 py-8">
+<div class="container mx-auto px-4 py-8 z-10">
 
     <h1 class="text-3xl font-bold mb-6 text-center">Bienvenue sur Info-Endo 💛</h1>
     <p class="text-center text-gray-600 mb-12">
@@ -92,7 +92,7 @@
 
         <section class="bg-white p-4 rounded shadow my-8">
             <h2 class="text-xl font-semibold mb-4">Carte interactive sur l'endométriose 🗺️</h2>
-            <div id="map" class="rounded-lg shadow" style="height: 400px;">
+            <div id="map" class="rounded-lg shadow relative" style="height: 400px;">
                 <!-- La carte sera chargée ici -->
             </div>
         </section>

@@ -10,6 +10,21 @@
     }
 }
 
+body {
+    background-color: pink;
+    
+}
+
+header {
+z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+}
+
+
 .animate-fadeIn {
     animation: fadeIn 0.8s ease-out forwards;
 }

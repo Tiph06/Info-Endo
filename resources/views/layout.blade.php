@@ -13,7 +13,13 @@
     <link rel="icon" type="image/png" href="{{ asset('images/LogoRubanSmall.png') }}">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        .leaflet-top {
+            z-index: 501 !important;
+            /* Evite que la carte passe par dessus la nav car !important force le css demandé */
 
+        }
+    </style>
 
 </head>
 

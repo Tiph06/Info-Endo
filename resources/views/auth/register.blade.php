@@ -47,16 +47,34 @@
             @enderror
         </div>
 
-        <div class="flex items-center justify-between">
-            <a class="text-sm text-pink-600 hover:underline" href="{{ route('login') }}">
-                Déjà inscrit ?
-            </a>
+        <!-- Case CGU -->
+        <div class="mb-4">
+            <label class="inline-flex items-start">
+                <input type="checkbox" name="terms" required class="mt-1 mr-2 rounded border-pink-300 text-pink-600 shadow-sm focus:ring-pink-500">
+                <span class="text-sm text-gray-700">
+                    J'accepte les
+                    <a href="{{ route('cgu') }}" target="_blank" class="text-pink-600 underline hover:text-pink-800">CGU</a>,
+                    la <a href="{{ route('confidentialite') }}" target="_blank" class="text-pink-600 underline hover:text-pink-800">Politique de confidentialité</a>,
+                    et les <a href="{{ route('mentions') }}" target="_blank" class="text-pink-600 underline hover:text-pink-800">Mentions légales</a>.
+                </span>
+            </label>
+        </div>
 
+        <!-- Bouton inscription -->
+        <div class="mb-4">
             <button type="submit"
-                class="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition">
+                class="w-full bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition">
                 S'inscrire
             </button>
         </div>
+
+        <!-- Lien "Déjà inscrit" -->
+        <div class="text-center">
+            <a class="text-sm text-pink-600 hover:underline" href="{{ route('login') }}">
+                Déjà inscrit ?
+            </a>
+        </div>
+
     </form>
 </div>
 @endsection

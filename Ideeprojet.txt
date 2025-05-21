@@ -46,7 +46,7 @@ leurs cycles
 
 leurs humeurs
 
-➡️ Petit outil de suivi personnel 💛 (même localement sans compte)
+➡️ Petit outil de suivi personnel 💛 (avec compte)
 
 6. 🧠 Lexique interactif
 Ajoute un encart "Petit lexique" qui affiche :

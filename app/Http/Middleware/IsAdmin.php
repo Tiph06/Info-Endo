@@ -2,8 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Models\User;
 use Closure;
 use Illuminate\Http\Request;
+use App\Http\Middleware\IsAdmin;
 
 use Symfony\Component\HttpFoundation\Response;
 
