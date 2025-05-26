@@ -28,7 +28,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->route('blog.index')->with('welcome', 'Bienvenue sur Info-Endo 🌸');
+        return redirect()->intended(route('blog.index'))->with('welcome', 'Bienvenue sur Info-Endo 🌸');  //Permet de revenir sur la page avant la co
     }
 
     /**

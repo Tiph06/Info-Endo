@@ -10,6 +10,7 @@
     'resources/js/app.js',
     'resources/js/pages/index-page.js'
     ])
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs" defer></script>
     <link rel="icon" type="image/png" href="{{ asset('images/LogoRubanSmall.png') }}">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -42,6 +43,24 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <!-- <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script> -->
     @yield('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('[data-animate-on-scroll]');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('opacity-100', 'translate-y-0', 'scale-100');
+                        entry.target.classList.remove('opacity-0', 'translate-y-10', 'scale-75');
+                        observer.unobserve(entry.target); // stop observer (like .once)
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            elements.forEach(el => observer.observe(el));
+        });
+    </script>
 
 </body>
 

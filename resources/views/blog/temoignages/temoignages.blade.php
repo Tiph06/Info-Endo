@@ -39,7 +39,7 @@
 </div>
 
 
-{{-- Bientôt : bouton pour écrire son propre témoignage --}}
+{{-- Bouton pour écrire son propre témoignage --}}
 <div class="mt-8">*
     <a href="{{ route('temoignages.create') }}">
         <button class="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 shadow">
@@ -47,6 +47,10 @@
         </button>
     </a>
 </div>
+<div class="mt-6 flex justify-center">
+    {{ $posts->links() }}
+</div>
+
 </div>
 <!-- Modale invisible -->
 <div id="modal" class="fixed inset-0 bg-rose-300 bg-opacity-20 flex items-center justify-center z-50 hidden">

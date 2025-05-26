@@ -14,6 +14,7 @@ use App\Http\Controllers\PostTemoignageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Models\Post;
 use App\Models\PostTemoignage;
@@ -100,14 +101,15 @@ Route::middleware('auth')->group(function () {
 //
 // Nouvelle page statique pour les témoignages
 Route::get('/temoignages', function () {
-    $posts = PostTemoignage::latest()->get(); // tu récupères tous les témoignages
+    $posts = PostTemoignage::latest()->paginate(6); // tu récupères tous les témoignages
     return view('blog.temoignages.temoignages', compact('posts'));
 })->name('temoignages.index');
 
 
 // Page pour creer un témoignage
 Route::get('/temoignages/create', function () {
-    if (!auth()->check()) {
+    if (!Auth::check()) {
+        session(['url.intended' => url()->current()]);
         return redirect()->route('login')->with('error', 'Veuillez vous connecter pour publier un témoignage.');
     }
 
